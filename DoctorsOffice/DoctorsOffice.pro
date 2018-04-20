@@ -25,10 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        doctorsoffice.cpp
+        doctorsoffice.cpp \
+    homecontroller.cpp \
+    appointmentcontroller.cpp \
+    patientcontroller.cpp \
+    employeecontroller.cpp
 
 HEADERS += \
-        doctorsoffice.h
+        doctorsoffice.h \
+    employee.h \
+    patient.h \
+    home.h \
+    appointment.h
 
 FORMS += \
         doctorsoffice.ui

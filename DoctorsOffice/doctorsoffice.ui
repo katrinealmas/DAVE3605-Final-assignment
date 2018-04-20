@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <property name="iconSize">
      <size>
@@ -737,7 +737,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="historyPage">
        <property name="geometry">
@@ -988,24 +988,11 @@
       <property name="title">
        <string>Create Employee</string>
       </property>
-      <widget class="QLabel" name="createEmployeeIdLabel">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>30</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Employee ID</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="createEmployeeFirstLabel">
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>60</y>
+         <y>40</y>
          <width>61</width>
          <height>16</height>
         </rect>
@@ -1018,7 +1005,7 @@
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>90</y>
+         <y>70</y>
          <width>61</width>
          <height>16</height>
         </rect>
@@ -1031,7 +1018,7 @@
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>120</y>
+         <y>100</y>
          <width>71</width>
          <height>16</height>
         </rect>
@@ -1044,7 +1031,7 @@
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>150</y>
+         <y>130</y>
          <width>41</width>
          <height>16</height>
         </rect>
@@ -1053,24 +1040,11 @@
         <string>Mobile</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="createEmployeeIdLine">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>170</x>
-         <y>30</y>
-         <width>271</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="createEmployeeFirstLine">
        <property name="geometry">
         <rect>
          <x>170</x>
-         <y>60</y>
+         <y>40</y>
          <width>271</width>
          <height>22</height>
         </rect>
@@ -1080,7 +1054,7 @@
        <property name="geometry">
         <rect>
          <x>170</x>
-         <y>90</y>
+         <y>70</y>
          <width>271</width>
          <height>22</height>
         </rect>
@@ -1090,7 +1064,7 @@
        <property name="geometry">
         <rect>
          <x>170</x>
-         <y>120</y>
+         <y>100</y>
          <width>271</width>
          <height>22</height>
         </rect>
@@ -1100,7 +1074,7 @@
        <property name="geometry">
         <rect>
          <x>170</x>
-         <y>150</y>
+         <y>130</y>
          <width>271</width>
          <height>22</height>
         </rect>
@@ -1110,7 +1084,7 @@
        <property name="geometry">
         <rect>
          <x>350</x>
-         <y>190</y>
+         <y>170</y>
          <width>93</width>
          <height>28</height>
         </rect>
