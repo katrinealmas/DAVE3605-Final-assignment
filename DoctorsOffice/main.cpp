@@ -1,11 +1,16 @@
-#include "doctorsoffice.h"
+#include "mainwindow.h"
+#include "dbconnect.cpp"
 #include <QApplication>
+#include <QtDebug>
+#include <QtSql>
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    DoctorsOffice w;
+    MainWindow w;
     w.show();
 
     return a.exec();
 }
+

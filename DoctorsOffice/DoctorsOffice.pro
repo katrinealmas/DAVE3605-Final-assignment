@@ -1,10 +1,10 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-04-11T19:38:49
+# Project created by QtCreator 2018-04-19T15:07:48
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,10 +25,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        doctorsoffice.cpp
+        mainwindow.cpp \
+    appointment.cpp \
+    dbconnect.cpp \
+    doctor.cpp \
+    patient.cpp \
+    summary.cpp
 
 HEADERS += \
-        doctorsoffice.h
+        mainwindow.h \
+    appointment.h \
+    doctor.h \
+    mainwindow.h \
+    patient.h \
+    summary.h
 
 FORMS += \
-        doctorsoffice.ui
+        mainwindow.ui
