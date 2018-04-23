@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-04-19T15:07:48
+# Project created by QtCreator 2018-04-11T19:38:49
 #
 #-------------------------------------------------
 
@@ -25,20 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    appointment.cpp \
-    dbconnect.cpp \
-    doctor.cpp \
-    patient.cpp \
-    summary.cpp
+        doctorsoffice.cpp \
+    homecontroller.cpp \
+    appointmentcontroller.cpp \
+    patientcontroller.cpp \
+    employeecontroller.cpp
 
 HEADERS += \
-        mainwindow.h \
-    appointment.h \
-    doctor.h \
-    mainwindow.h \
+        doctorsoffice.h \
+    employee.h \
     patient.h \
-    summary.h
+    home.h \
+    appointment.h
 
 FORMS += \
-        mainwindow.ui
+        doctorsoffice.ui

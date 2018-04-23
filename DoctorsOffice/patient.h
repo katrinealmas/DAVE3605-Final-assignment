@@ -1,32 +1,22 @@
-#ifndef KUNDE_H
-#define KUNDE_H
+#ifndef PATIENT_H
+#define PATIENT_H
 
-#include <iostream>
-#include <QString>
+class DoctorsOffice;
 
-using namespace std;
-
-class Patient
+class PatientController
 {
-private:
-    QString personNr;
-    QString firstname;
-    QString surname;
-    int tlf;
-    QString address;
-    int postcode;
-    QString city;
-
 public:
-    Patient( QString personNr, QString firstname, QString surname, int tlf, QString address, int postcode);
-    QString getPersonNr();
-    QString getFirstname();
-    QString getSurname();
-    QString getAddress();
-    int getPostcode();
-    int getTlf();
-    void getOutput();
+    PatientController(DoctorsOffice *doc);
 
+    void editPatientInfo();
+
+    void savePatientInfo();
+
+    void clearReport();
+
+    void disablePatientLineEdits();
+private:
+    DoctorsOffice *doctor;
 };
 
-#endif // KUNDE_H
+#endif // PATIENTCONTROLLER_H

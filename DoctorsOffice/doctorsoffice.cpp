@@ -1,22 +1,126 @@
 #include "doctorsoffice.h"
+#include "home.h"
+#include "appointment.h"
+#include "patient.h"
+#include "employee.h"
 #include "ui_doctorsoffice.h"
 
-#include <QString>
-#include <QTableWidget>
+#include <QMessageBox>
+#include <QApplication>
+#include <QtDebug>
+#include <QtSql>
+#include <QDate>
+#include <QTime>
+#include <QIntValidator>
+#include <QRegExp>
+
+
+
+bool DoctorsOffice::createConnections()
+{
+    // create the default database connection
+    QSqlDatabase defaultDB = QSqlDatabase::addDatabase("QSQLITE");
+
+    defaultDB.setDatabaseName("C:/Users/gnlzi/Downloads/sqlitestudio-3.1.1/SQLiteStudio/office");
+
+    if (!(defaultDB.open())) {
+        qDebug( "Failed to open database: " );
+        return false;
+    }
+
+    return true;
+}
+
+void DoctorsOffice::addPatientValues(QString id, QString name, QString surname, int tlf, QString address, int post){
+    QSqlQuery query;
+
+    query.prepare("INSERT INTO Patient ("
+                  "PersonNr,"
+                  "Firstname,"
+                  "Surname,"
+                  "Tlf,"
+                  "Address,"
+                  "Postcode)"
+                  "VALUES (?,?,?,?,?,?);");
+
+    query.addBindValue(id);
+    query.addBindValue(name);
+    query.addBindValue(surname);
+    query.addBindValue(tlf);
+    query.addBindValue(address);
+    query.addBindValue(post);
+
+    if(!query.exec()){
+        qDebug() << "DIDN'T INSERT";
+    }
+}
+
 
 DoctorsOffice::DoctorsOffice(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::DoctorsOffice)
+    ui(new Ui::DoctorsOffice),
+    home(new HomeController(this)),
+    appt(new AppointmentController(this)),
+    patient(new PatientController(this)),
+    employee(new EmployeeController(this))
 {
     ui->setupUi(this);
+
+    //Initialize GUI elements
+    ui->createApptDateEdit->setDisplayFormat("d MMMM yyyy");
+    ui->createApptDateEdit->setDate(QDate::currentDate());
+    ui->createApptTimeEdit->setDisplayFormat("hh:mm");
+    ui->createApptTimeEdit->setTime(QTime(9,00));
+    ui->createPatientBday->setDate(QDate::currentDate().addYears(-20));
+    ui->createPatientBday->setDisplayFormat("d MMMM yyyy");
+    ui->patientBday->setDisplayFormat("d MMM yyyy");
+
+    //Initialize validations
+    ui->calendarWidget->setMinimumDate(QDate::currentDate());
+    ui->createApptDateEdit->setMinimumDate(QDate::currentDate());
+    ui->calendarWidget->setMaximumDate(QDate::currentDate().addMonths(3));
+    ui->createApptDateEdit->setMaximumDate(QDate::currentDate().addMonths(3));
+    ui->createPatientBday->setMinimumDate(QDate::currentDate().addYears(-130));
+    ui->createPatientBday->setMaximumDate(QDate::currentDate());
+    ui->patientBday->setMinimumDate(QDate::currentDate().addYears(-130));
+    ui->patientBday->setMaximumDate(QDate::currentDate());
+
+    QRegExp rxMobile("[0-9]{8}");
+    ui->createPatientMobileLine->setValidator(new QRegExpValidator (rxMobile, this));
+    ui->patientMobileLine->setValidator(new QRegExpValidator (rxMobile, this));
+
+    QRegExp rxPersonalNr("[0-9]{11}");
+    ui->createPatientPersonNrLine->setValidator(new QRegExpValidator(rxPersonalNr, this));
+    ui->patientPersonNrLine->setValidator(new QRegExpValidator(rxPersonalNr, this));
+
+
+    createConnections();
+    addPatientValues("33334333333", "Bobertb", "Bobson", 12345678, "Bobway 2", 1234);
+
     setWindowTitle("Doctor's office");
 }
 
 DoctorsOffice::~DoctorsOffice()
 {
     delete ui;
+    delete home;
+    delete appt;
+    delete patient;
+    delete employee;
 }
 
+
+/**
+ * @brief DoctorsOffice::on_calendarWidget_clicked
+ * @param date
+ *
+ * HOME TAB
+ * - Selects date from calendar widget.
+ */
+void DoctorsOffice::on_calendarWidget_clicked(const QDate &date)
+{
+    home->selectDate();
+}
 
 /**
  * @brief DoctorsOffice::on_saveApptButton_clicked
@@ -27,19 +131,7 @@ DoctorsOffice::~DoctorsOffice()
  */
 void DoctorsOffice::on_saveApptButton_clicked()
 {
-    QString patient = ui->createApptPatientLine->text();
-    QString doctor = ui->createApptDoctorLine->text();
-    QString date = ui->createApptDateEdit->text();
-    QString time = ui->createApptTimeEdit->text();
-
-    clearCreateAppt();
-
-    ui->apptTable->insertRow(ui->apptTable->rowCount());
-    int row = ui->apptTable->rowCount()-1;
-    ui->apptTable->setItem(row, 0, new QTableWidgetItem(patient));
-    ui->apptTable->setItem(row, 1, new QTableWidgetItem(doctor));
-    ui->apptTable->setItem(row, 2, new QTableWidgetItem(date));
-    ui->apptTable->setItem(row, 3, new QTableWidgetItem(time));
+    home->saveAppt();
 }
 
 /**
@@ -50,8 +142,7 @@ void DoctorsOffice::on_saveApptButton_clicked()
  * appointment group.
  */
 void DoctorsOffice::clearCreateAppt(){
-    ui->createApptPatientLine->clear();
-    ui->createApptDoctorLine->clear();
+    home->clearCreateAppt();
 }
 
 /**
@@ -63,30 +154,7 @@ void DoctorsOffice::clearCreateAppt(){
  */
 void DoctorsOffice::on_savePatientButton_clicked()
 {
-    QString firstname = ui->createPatientFirstLine->text();
-    QString lastname = ui->createPatientLastLine->text();
-    QString fullname = firstname + " " + lastname;
-    QDate birthday = ui->createPatientBday->date();
-    QString personalNr = ui->createPatientPersonNrLine->text();
-    QString mobile = ui->createPatientMobileLine->text();
-    QString street = ui->createPatientStreetLine->text();
-    QString city = ui->createPatientCityLine->text();
-    QString postalCode = ui->createPatientPostLine->text();
-
-    //Show on list
-    ui->patientList->insertItem(0, fullname);
-
-    clearCreatePatient();
-
-    //Show information
-    ui->patientFirstLine->setText(firstname);
-    ui->patientLastLine->setText(lastname);
-    ui->patientBday->setDate(birthday);
-    ui->patientPersonNrLine->setText(personalNr);
-    ui->patientMobileLine->setText(mobile);
-    ui->patientStreetLine->setText(street);
-    ui->patientCityLine->setText(city);
-    ui->patientPostLine->setText(postalCode);
+    home->savePatient();
 }
 
 /**
@@ -97,25 +165,27 @@ void DoctorsOffice::on_savePatientButton_clicked()
  *  group box.
  */
 void DoctorsOffice::clearCreatePatient(){
-    ui->createPatientFirstLine->clear();
-    ui->createPatientLastLine->clear();
-    ui->createPatientPersonNrLine->clear();
-    ui->createPatientMobileLine->clear();
-    ui->createPatientStreetLine->clear();
-    ui->createPatientCityLine->clear();
-    ui->createPatientPostLine->clear();
+    home->clearCreatePatient();
 }
+
 
 /**
  * @brief DoctorsOffice::on_deleteApptButton_clicked
  *
  * APPOINTMENT TAB
  * - Deletes selected row to remove patient from the
- * appointment list.
+ * appointment list when user confirms the alert dialog
+ * box.
  */
 void DoctorsOffice::on_deleteApptButton_clicked()
 {
-    ui->apptTable->removeRow(ui->apptTable->currentRow());
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirm", "Are you sure you want "
+                                  "to delete the selected appointment?",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+      appt->deleteAppt();
+    }
 }
 
 
@@ -128,14 +198,7 @@ void DoctorsOffice::on_deleteApptButton_clicked()
  */
 void DoctorsOffice::on_editPatientInfoButton_clicked()
 {
-    ui->patientFirstLine->setEnabled(true);
-    ui->patientLastLine->setEnabled(true);
-    ui->patientBday->setEnabled(true);
-    ui->patientPersonNrLine->setEnabled(true);
-    ui->patientMobileLine->setEnabled(true);
-    ui->patientStreetLine->setEnabled(true);
-    ui->patientCityLine->setEnabled(true);
-    ui->patientPostLine->setEnabled(true);
+    patient->editPatientInfo();
 }
 
 
@@ -149,18 +212,7 @@ void DoctorsOffice::on_editPatientInfoButton_clicked()
  */
 void DoctorsOffice::on_savePatientInfoButton_clicked()
 {
-    QString summary = ui->summaryText->toPlainText();
-    QString diagnosis = ui->diagnosisText->toPlainText();
-    QString prescription = ui->prescriptionText->toPlainText();
-
-    ui->historyTable->insertRow(ui->historyTable->rowCount());
-    int row = ui->historyTable->rowCount()-1;
-    ui->historyTable->setItem(row, 1, new QTableWidgetItem(summary));
-    ui->historyTable->setItem(row, 2, new QTableWidgetItem(diagnosis));
-    ui->historyTable->setItem(row, 3, new QTableWidgetItem(prescription));
-
-    clearReport();
-    disablePatientLineEdits();
+    patient->savePatientInfo();
 }
 
 /**
@@ -172,9 +224,7 @@ void DoctorsOffice::on_savePatientInfoButton_clicked()
  */
 void DoctorsOffice::clearReport()
 {
-    ui->summaryText->clear();
-    ui->diagnosisText->clear();
-    ui->prescriptionText->clear();
+    patient->clearReport();
 }
 
 
@@ -187,14 +237,7 @@ void DoctorsOffice::clearReport()
  */
 void DoctorsOffice::disablePatientLineEdits()
 {
-    ui->patientFirstLine->setEnabled(false);
-    ui->patientLastLine->setEnabled(false);
-    ui->patientBday->setEnabled(false);
-    ui->patientPersonNrLine->setEnabled(false);
-    ui->patientMobileLine->setEnabled(false);
-    ui->patientStreetLine->setEnabled(false);
-    ui->patientCityLine->setEnabled(false);
-    ui->patientPostLine->setEnabled(false);
+    patient->disablePatientLineEdits();
 }
 
 /**
@@ -207,16 +250,7 @@ void DoctorsOffice::disablePatientLineEdits()
  */
 void DoctorsOffice::on_saveCreateEmployee_clicked()
 {
-    QString firstname = ui->createEmployeeFirstLine->text();
-    QString lastname = ui->createEmployeeLastLine->text();
-    QString fullname = firstname + " " + lastname;
-    QString positiion = ui->createEmployeePositionLine->text();
-    QString mobile = ui->createEmployeeMobileLine->text();
-
-   ui->employeeList->insertItem(0, fullname);
-
-    clearCreateEmployee();
-
+    employee->saveCreateEmployee();
 }
 
 /**
@@ -228,11 +262,7 @@ void DoctorsOffice::on_saveCreateEmployee_clicked()
  */
 void DoctorsOffice::clearCreateEmployee()
 {
-    ui->createEmployeeIdLine->clear();
-    ui->createEmployeeFirstLine->clear();
-    ui->createEmployeeLastLine->clear();
-    ui->createEmployeePositionLine->clear();
-    ui->createEmployeeMobileLine->clear();
+    employee->clearCreateEmployee();
 }
 
 /**
@@ -244,10 +274,7 @@ void DoctorsOffice::clearCreateEmployee()
  */
 void DoctorsOffice::on_editEmployeeInfoButton_clicked()
 {
-    ui->employeeFirstLine->setEnabled(true);
-    ui->employeeLastLine->setEnabled(true);
-    ui->employeePositionLine->setEnabled(true);
-    ui->employeeMobileLine->setEnabled(true);
+    employee->editEmployeeInfo();
 }
 
 /**
@@ -259,8 +286,18 @@ void DoctorsOffice::on_editEmployeeInfoButton_clicked()
  */
 void DoctorsOffice::on_saveEmployeeInfoButton_clicked()
 {
-    ui->employeeFirstLine->setEnabled(false);
-    ui->employeeLastLine->setEnabled(false);
-    ui->employeePositionLine->setEnabled(false);
-    ui->employeeMobileLine->setEnabled(false);
+    employee->saveEmployeeInfo();
 }
+
+/**
+ * @brief DoctorsOffice::validateIfEmpty
+ *
+ * Warning message box when user does not set in
+ * information on all input fields when creating
+ * an appointment.
+ */
+void DoctorsOffice::validateIfEmpty(){
+    QMessageBox::warning(this, "Warning", "You must fill up information "
+                                            "on each input fields.");
+}
+

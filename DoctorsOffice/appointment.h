@@ -1,23 +1,17 @@
-#ifndef TIMEPLAN_H
-#define TIMEPLAN_H
-#include <iostream>
-#include <Qstring>
-#include "patient.h"
+#ifndef APPOINTMENTCONTROLLER_H
+#define APPOINTMENTCONTROLLER_H
 
-using namespace std;
+class DoctorsOffice;
 
-class Appointment
+class AppointmentController
 {
-private:
-    QString id;
-    QString date;
-    QString time;
-    QString patientId;
-    QString doctorLicence;
-
 public:
-   Appointment(int id, QString date, QString time, QString patientId, QString doctorLicence);
-   void getOutput();
+    AppointmentController(DoctorsOffice *doc);
+
+    void deleteAppt();
+
+private:
+    DoctorsOffice *doctor;
 };
 
-#endif // TIMEPLAN_H
+#endif // APPOINTMENTCONTROLLER_H

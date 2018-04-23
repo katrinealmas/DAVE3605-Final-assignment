@@ -4,19 +4,31 @@
 #include <QMainWindow>
 
 namespace Ui {
+
 class DoctorsOffice;
+
 }
+
+class HomeController;
+
+class AppointmentController;
+
+class PatientController;
+
+class EmployeeController;
 
 class DoctorsOffice : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit DoctorsOffice(QWidget *parent = 0);
     ~DoctorsOffice();
 
+    bool createConnections();
+
+    void addPatientValues(QString id, QString name, QString surname, int tlf, QString address, int post);
+
 private slots:
-    //void on_apptTable_activated(const QModelIndex &index);
 
     void on_saveApptButton_clicked();
 
@@ -25,8 +37,6 @@ private slots:
     void on_savePatientButton_clicked();
 
     void clearCreatePatient();
-
-    //void on_createApptDateEdit_userDateChanged(const QDate &date);
 
     void on_editPatientInfoButton_clicked();
 
@@ -46,8 +56,28 @@ private slots:
 
     void on_saveEmployeeInfoButton_clicked();
 
+    void validateIfEmpty();
+
+    void on_calendarWidget_clicked(const QDate &date);
+
 private:
     Ui::DoctorsOffice *ui;
+
+    HomeController *home;
+
+    AppointmentController *appt;
+
+    PatientController *patient;
+
+    EmployeeController *employee;
+
+    friend class HomeController;
+
+    friend class AppointmentController;
+
+    friend class PatientController;
+
+    friend class EmployeeController;
 };
 
 #endif // DOCTORSOFFICE_H
