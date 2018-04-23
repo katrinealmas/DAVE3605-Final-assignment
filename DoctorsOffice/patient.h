@@ -1,3 +1,8 @@
+/**
+* @author Ginelle Z. Ignacio (s300364)
+*/
+
+
 #ifndef PATIENT_H
 #define PATIENT_H
 

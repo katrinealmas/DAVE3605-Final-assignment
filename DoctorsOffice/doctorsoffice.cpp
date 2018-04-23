@@ -55,7 +55,15 @@ void DoctorsOffice::addPatientValues(QString id, QString name, QString surname, 
     }
 }
 
-
+/**
+ * @brief DoctorsOffice::DoctorsOffice
+ * @param parent
+ * @author Ginelle Z. Ignacio (s300364)
+ *
+ * - Connects the classes to the user interface.
+ * - Initialize GUI elements and inputn validations
+ * when the program starts.
+ */
 DoctorsOffice::DoctorsOffice(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::DoctorsOffice),
@@ -113,6 +121,7 @@ DoctorsOffice::~DoctorsOffice()
 /**
  * @brief DoctorsOffice::on_calendarWidget_clicked
  * @param date
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * HOME TAB
  * - Selects date from calendar widget.
@@ -124,6 +133,7 @@ void DoctorsOffice::on_calendarWidget_clicked(const QDate &date)
 
 /**
  * @brief DoctorsOffice::on_saveApptButton_clicked
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * HOME TAB
  * - Saves newly created appointment
@@ -136,6 +146,7 @@ void DoctorsOffice::on_saveApptButton_clicked()
 
 /**
  * @brief DoctorsOffice::clearCreateAppt
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * HOME TAB
  * - Helping method to clear line edits in create
@@ -147,6 +158,7 @@ void DoctorsOffice::clearCreateAppt(){
 
 /**
  * @brief DoctorsOffice::on_savePatientButton_clicked
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * HOME TAB
  * - Saves newly created patients
@@ -159,6 +171,7 @@ void DoctorsOffice::on_savePatientButton_clicked()
 
 /**
  * @brief DoctorsOffice::clearCreatePatient
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * HOME TAB
  * - Helping method to clear line edits in Create Patient
@@ -171,6 +184,7 @@ void DoctorsOffice::clearCreatePatient(){
 
 /**
  * @brief DoctorsOffice::on_deleteApptButton_clicked
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * APPOINTMENT TAB
  * - Deletes selected row to remove patient from the
@@ -191,6 +205,7 @@ void DoctorsOffice::on_deleteApptButton_clicked()
 
 /**
  * @brief DoctorsOffice::on_editPatientInfoButton_clicked
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * PATIENT TAB
  * - Enables the line edits on basic- & contact information
@@ -204,6 +219,7 @@ void DoctorsOffice::on_editPatientInfoButton_clicked()
 
 /**
  * @brief DoctorsOffice::on_savePatientInfoButton_clicked
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * PATIENT TAB
  * - Saves patient information
@@ -217,6 +233,7 @@ void DoctorsOffice::on_savePatientInfoButton_clicked()
 
 /**
  * @brief DoctorsOffice::clearReport
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * PATIENT TAB
  * - Helping method to clear current report text edits
@@ -230,6 +247,7 @@ void DoctorsOffice::clearReport()
 
 /**
  * @brief DoctorsOffice::disablePatientLineEdits
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * PATIENT TAB
  * - Helping method to disable line edits of patient
@@ -242,6 +260,7 @@ void DoctorsOffice::disablePatientLineEdits()
 
 /**
  * @brief DoctorsOffice::on_saveCreateEmployee_clicked
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * EMPLOYEE TAB
  * - Saves newly created employee.
@@ -255,6 +274,7 @@ void DoctorsOffice::on_saveCreateEmployee_clicked()
 
 /**
  * @brief DoctorsOffice::clearCreateEmployee
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * EMPLOYEE TAB
  * - Helping method to clear out the line edits in
@@ -267,6 +287,7 @@ void DoctorsOffice::clearCreateEmployee()
 
 /**
  * @brief DoctorsOffice::on_editEmployeeInfoButton_clicked
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * EMPLOYEE TAB
  * - Enables the the line edits on Employee Information
@@ -279,6 +300,7 @@ void DoctorsOffice::on_editEmployeeInfoButton_clicked()
 
 /**
  * @brief DoctorsOffice::on_saveEmployeeInfoButton_clicked
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * EMPLOYEE TAB
  * - Helping to disable the line edits after changing the
@@ -291,6 +313,7 @@ void DoctorsOffice::on_saveEmployeeInfoButton_clicked()
 
 /**
  * @brief DoctorsOffice::validateIfEmpty
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Warning message box when user does not set in
  * information on all input fields when creating

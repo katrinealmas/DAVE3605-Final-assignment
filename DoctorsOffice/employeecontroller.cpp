@@ -2,6 +2,15 @@
 #include "doctorsoffice.h"
 #include "ui_doctorsoffice.h"
 
+/**
+ * @brief EmployeeController::EmployeeController
+ * @param doc
+ * @author Ginelle Z. Ignacio (s300364)
+ *
+ * Allows EmployeeController class to have access to
+ * the datas and methods belonging to DoctorsOffice
+ * class.
+ */
 EmployeeController::EmployeeController(DoctorsOffice *doc):doctor(doc)
 {
 
@@ -9,6 +18,7 @@ EmployeeController::EmployeeController(DoctorsOffice *doc):doctor(doc)
 
 /**
  * @brief EmployeeController::saveCreateEmployee
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * - Saves newly created employee.
  * - Shows employee's fullname into the employee list.
@@ -23,6 +33,7 @@ void EmployeeController::saveCreateEmployee()
     QString position = doctor->ui->createEmployeePositionLine->text();
     QString mobile = doctor->ui->createEmployeeMobileLine->text();
 
+    //Check if one of the input field is empty
     if(firstname.isEmpty() | lastname.isEmpty() |
             position.isEmpty() | mobile.isEmpty()){
         doctor->validateIfEmpty();
@@ -44,6 +55,7 @@ void EmployeeController::saveCreateEmployee()
 
 /**
  * @brief EmployeeController::clearCreateEmployee
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * - Helping method to clear out the line edits in
  * Create Employee group box.
@@ -58,6 +70,7 @@ void EmployeeController::clearCreateEmployee()
 
 /**
  * @brief EmployeeController::editEmployeeInfoButton
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Enables the the line edits on Employee Information
  * group box to change data.
@@ -72,6 +85,7 @@ void EmployeeController::editEmployeeInfo()
 
 /**
  * @brief EmployeeController::saveEmployeeInfoButton
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Helping to disable the line edits after changing the
  * data in "edit mode".

@@ -3,7 +3,14 @@
 #include "ui_doctorsoffice.h"
 
 
-
+/**
+ * @brief HomeController::HomeController
+ * @param doc
+ * @author Ginelle Z. Ignacio (s300364)
+ *
+ * Allows HomeController class to have access to the
+ * datas and methods belonging to DoctorsOffice class.
+ */
 HomeController::HomeController(DoctorsOffice *doc):doctor(doc)
 {
 
@@ -12,6 +19,7 @@ HomeController::HomeController(DoctorsOffice *doc):doctor(doc)
 
 /**
  * @brief HomeController::selectDate
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Selects date from calendar widget.
  */
@@ -22,6 +30,7 @@ void HomeController::selectDate(){
 
 /**
  * @brief HomeController::saveAppt
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * - Saves newly created appointment
  * - Sends information to the APPOINTMENT TAB table list.
@@ -32,10 +41,12 @@ void HomeController::saveAppt(){
     QString date = doctor->ui->createApptDateEdit->text();
     QString time = doctor->ui->createApptTimeEdit->text();
 
+    //Checks if one of the input field is empty
     if (patient.isEmpty() | patientsDoctor.isEmpty() |
             date.isEmpty() | time.isEmpty()) {
         doctor->validateIfEmpty();
     } else {
+        //Show on appointment list
         doctor->ui->apptTable->insertRow(doctor->ui->apptTable->rowCount());
         int row = doctor->ui->apptTable->rowCount()-1;
         doctor->ui->apptTable->setItem(row, 0, new QTableWidgetItem(patient));
@@ -49,6 +60,7 @@ void HomeController::saveAppt(){
 
 /**
  * @brief HomeController::clearCreateAppt
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Helping method to clear line edits in create
  * appointment group.
@@ -61,6 +73,7 @@ void HomeController::clearCreateAppt(){
 
 /**
  * @brief HomeController::savePatient
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * - Saves newly created patients
  * - Sends information on the PATIENT TAB's patient list.
@@ -77,6 +90,7 @@ void HomeController::savePatient()
     QString city = doctor->ui->createPatientCityLine->text();
     QString postalCode = doctor->ui->createPatientPostLine->text();
 
+    //Check if one of the input field is empty
     if(firstname.isEmpty() | lastname.isEmpty() |
             birthday.isNull() | personalNr.isEmpty() |
             mobile.isEmpty() | street.isEmpty() |
@@ -105,6 +119,7 @@ void HomeController::savePatient()
 
 /**
  * @brief HomeController::clearCreatePatient
+ * @author Ginelle Z. Ignacio (s300364)
  *
  *  Helping method to clear line edits in Create Patient
  *  group box.

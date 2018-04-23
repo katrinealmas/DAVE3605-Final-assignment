@@ -2,6 +2,15 @@
 #include "doctorsoffice.h"
 #include "ui_doctorsoffice.h"
 
+
+/**
+ * @brief PatientController::PatientController
+ * @param doc
+ * @author Ginelle Z. Ignacio
+ *
+ * Allows PatientController class to have access to
+ * the datas and methods belonging to DoctorsOffice class.
+ */
 PatientController::PatientController(DoctorsOffice *doc):doctor(doc)
 {
 
@@ -10,6 +19,7 @@ PatientController::PatientController(DoctorsOffice *doc):doctor(doc)
 
 /**
  * @brief PatientController::editPatientInfo
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Enables the line edits on basic- & contact information
  * group box to change data.
@@ -29,6 +39,7 @@ void PatientController::editPatientInfo()
 
 /**
  * @brief PatientController::savePatientInfo
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * - Saves patient information.
  * - Clears text edits on current report.
@@ -52,6 +63,7 @@ void PatientController::savePatientInfo()
 
 /**
  * @brief PatientController::clearReport
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Helping method to clear current report text edits
  * when the save button is fired.
@@ -66,6 +78,7 @@ void PatientController::clearReport()
 
 /**
  * @brief PatientController::disablePatientLineEdits
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Helping method to disable line edits of patient
  * information when save button is fired.

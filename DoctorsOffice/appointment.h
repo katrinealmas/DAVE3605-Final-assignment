@@ -1,3 +1,8 @@
+/**
+* @author Ginelle Z. Ignacio (s300364)
+*/
+
+
 #ifndef APPOINTMENTCONTROLLER_H
 #define APPOINTMENTCONTROLLER_H
 

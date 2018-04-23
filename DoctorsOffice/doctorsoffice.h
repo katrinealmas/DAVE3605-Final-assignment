@@ -1,3 +1,8 @@
+/**
+* @author Ginelle Z. Ignacio (s300364)
+*/
+
+
 #ifndef DOCTORSOFFICE_H
 #define DOCTORSOFFICE_H
 
