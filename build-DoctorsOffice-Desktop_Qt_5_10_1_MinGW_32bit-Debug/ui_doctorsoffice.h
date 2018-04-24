@@ -518,7 +518,7 @@ public:
         createApptPatientLabel->setText(QApplication::translate("DoctorsOffice", "Person Nr", nullptr));
         createApptDateLabel->setText(QApplication::translate("DoctorsOffice", "Date", nullptr));
         createApptDoctorLabel->setText(QApplication::translate("DoctorsOffice", "Employee Id", nullptr));
-        createApptDoctorLine->setText(QApplication::translate("DoctorsOffice", "Dr. ", nullptr));
+        createApptDoctorLine->setText(QString());
         saveApptButton->setText(QApplication::translate("DoctorsOffice", "Save", nullptr));
         createApptTimeLabel->setText(QApplication::translate("DoctorsOffice", "Time", nullptr));
         createPatientGroup->setTitle(QApplication::translate("DoctorsOffice", "Create Patient", nullptr));

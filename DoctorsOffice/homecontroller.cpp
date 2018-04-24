@@ -102,7 +102,7 @@ void HomeController::savePatient()
     }
     else {
         //Show on list
-        int size = doctor->ui->patientList->count();
+        int size = doctor->ui->patientList->count()+1;
 
         // Adds patient in database
         Patient patient(personalNr,firstname,lastname,mobile,street,postalCode,city,birthday.toString("dd/MM/yyyy"));

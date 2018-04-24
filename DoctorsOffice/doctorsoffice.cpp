@@ -23,12 +23,10 @@ DoctorsOffice::DoctorsOffice(QWidget *parent) :
     ui->setupUi(this);
 
     //Initialize GUI elements
-        ui->createApptDateEdit->setDisplayFormat("d MMMM yyyy");
         ui->createApptDateEdit->setDate(QDate::currentDate());
         ui->createApptTimeEdit->setDisplayFormat("hh:mm");
         ui->createApptTimeEdit->setTime(QTime(9,00));
         ui->createPatientBday->setDate(QDate::currentDate().addYears(-20));
-        ui->createPatientBday->setDisplayFormat("d MMMM yyyy");
         ui->patientBday->setDisplayFormat("d MMM yyyy");
 
         //Initialize validations
@@ -45,14 +43,19 @@ DoctorsOffice::DoctorsOffice(QWidget *parent) :
         ui->createPatientMobileLine->setValidator(new QRegExpValidator (rxMobile, this));
         ui->patientMobileLine->setValidator(new QRegExpValidator (rxMobile, this));
         ui->employeeMobileLine->setValidator(new QRegExpValidator(rxMobile, this));
+        ui->createEmployeeMobileLine->setValidator(new QRegExpValidator(rxMobile, this));
 
         QRegExp rxPersonalNr("[0-9]{11}");
         ui->createPatientPersonNrLine->setValidator(new QRegExpValidator(rxPersonalNr, this));
         ui->patientPersonNrLine->setValidator(new QRegExpValidator(rxPersonalNr, this));
+        ui->createApptPatientLine->setValidator(new QRegExpValidator(rxPersonalNr, this));
 
         QRegExp rxPost("[0-9]{4}");
         ui->createPatientPostLine->setValidator(new QRegExpValidator(rxPost, this));
         ui->patientPostLine->setValidator(new QRegExpValidator(rxPost, this));
+
+        QRegExp rxEmployeeId("[0-9]");
+        ui->createApptDoctorLine->setValidator(new QRegExpValidator(rxEmployeeId, this));
 
         //Set up database connection and initalize all lists
         createConnection();
@@ -73,6 +76,18 @@ DoctorsOffice::~DoctorsOffice()
     delete employee;
 }
 
+/**
+ * @brief DoctorsOffice::on_calendarWidget_clicked
+ * @param date
+ * @author Ginelle Z. Ignacio (s300364)
+ *
+ * HOME TAB
+ * - Selects date from calendar widget.
+ */
+void DoctorsOffice::on_calendarWidget_clicked(const QDate &date)
+{
+    home->selectDate();
+}
 
 /**
  * @brief DoctorsOffice::on_saveApptButton_clicked

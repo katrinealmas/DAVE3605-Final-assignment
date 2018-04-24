@@ -117,7 +117,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Dr. </string>
+        <string/>
        </property>
       </widget>
       <widget class="QPushButton" name="saveApptButton">

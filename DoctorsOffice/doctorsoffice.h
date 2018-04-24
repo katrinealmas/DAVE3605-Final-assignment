@@ -28,6 +28,8 @@ public:
 
 private slots:
 
+    void on_calendarWidget_clicked(const QDate &date);
+
     void on_saveApptButton_clicked();
 
     void clearCreateAppt();
@@ -57,6 +59,7 @@ private slots:
     void on_selectEmployeeButton_clicked();
 
     void on_selectPatientButton_clicked();
+
     void validateIfEmpty();
 
 private:
