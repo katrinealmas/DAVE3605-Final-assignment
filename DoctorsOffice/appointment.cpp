@@ -1,6 +1,7 @@
 /**
 * @author Katrine Almås (s299622)
 */
+
 #include "appointment.h"
 #include "patientcontroller.h"
 
@@ -31,6 +32,13 @@ QString Appointment::getDoctorLicence(){
     return doctorLicence;
 }
 
+/**
+ * @brief getAllAppointments
+ * @return appointments
+ *
+ * - Selects all appointments in database
+ * - Adds them in vector
+ */
 vector<Appointment> getAllAppointments(){
     QSqlQuery query;
     vector<Appointment> appointments;
@@ -56,6 +64,12 @@ vector<Appointment> getAllAppointments(){
        return appointments;
 }
 
+/**
+ * @brief deleteAppointment
+ * @param remove
+ *
+ * - Deletes the appointment where id equals the parameter
+ */
 void deleteAppointment(int remove){
     QSqlQuery query;
     query.prepare("DELETE FROM Appointment WHERE Id=?");
@@ -64,6 +78,12 @@ void deleteAppointment(int remove){
     query.exec();
 }
 
+/**
+ * @brief addAppointmentValues
+ * @param appt
+ *
+ * - Adds a new appointment in the database
+ */
 void addAppointmentValues(Appointment &appt){
     QSqlQuery query;
 

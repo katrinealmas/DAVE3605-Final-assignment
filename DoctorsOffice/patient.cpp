@@ -57,6 +57,12 @@ QString Patient::getBirthday(){
     return birthday;
 }
 
+/**
+ * @brief addPatientValues
+ * @param pat
+ *
+ * Adds a new patient to the database
+ */
 void addPatientValues(Patient &pat){
     QSqlQuery query;
 
@@ -85,7 +91,12 @@ void addPatientValues(Patient &pat){
     }
 }
 
-
+/**
+ * @brief getAllPatients
+ * @return patients
+ *
+ * Gets all registered patients from the database
+ */
 vector<Patient> getAllPatients(){
         QSqlQuery query;
         vector<Patient> patients;
@@ -113,7 +124,12 @@ vector<Patient> getAllPatients(){
            }
            return patients;
     }
-
+/**
+ * @brief editPatient
+ * @param pat
+ *
+ * Updates a patient database entry
+ */
 void editPatient(Patient &pat){
     QSqlQuery query;
 
@@ -132,6 +148,13 @@ void editPatient(Patient &pat){
          query.exec();
 }
 
+/**
+ * @brief getPatient
+ * @param id
+ * @return patient
+ *
+ * Gets the patient with the corresponding id from the database
+ */
 Patient getPatient(QString id){
         QSqlQuery query;
            int numRows;

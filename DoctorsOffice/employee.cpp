@@ -42,7 +42,13 @@ QString Employee::getId(){
     return id;
 }
 
-
+/**
+ * @brief addEmployeeValues
+ * @param emp
+ *
+ * - Prepares a query to insert into the database
+ * - Inserts a new Employee into the database
+ */
 void addEmployeeValues(Employee &emp){
         QSqlQuery query;
 
@@ -66,6 +72,13 @@ void addEmployeeValues(Employee &emp){
 
     }
 
+/**
+ * @brief getAllEmployees
+ * @return employees
+ *
+ * - Selects all employees from database
+ * - Populates a vector with employee objects
+ */
 vector<Employee> getAllEmployees(){
 
         QSqlQuery query;
@@ -94,7 +107,14 @@ vector<Employee> getAllEmployees(){
            return emp;
     }
 
-
+/**
+ * @brief editEmployee
+ * @param emp
+ *
+ * - Prepares an update query
+ * - Binds values to the query and executes
+ * - Employee with matching Id is changed
+ */
 void editEmployee(Employee &emp){
     QSqlQuery query;
 
@@ -109,6 +129,13 @@ void editEmployee(Employee &emp){
          query.exec();
 }
 
+/**
+ * @brief getEmployee
+ * @param id
+ * @return employee
+ *
+ * - Gets the employee from the database which corresponds with the id parameter
+ */
 Employee getEmployee(QString id){
         QSqlQuery query;
            int numRows;

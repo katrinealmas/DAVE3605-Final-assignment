@@ -34,6 +34,12 @@ QString Summary::getDate(){
     return date;
 }
 
+/**
+ * @brief addSummaryValues
+ * @param summary
+ *
+ * Adds a new summary to the database
+ */
 void addSummaryValues(Summary &summary){
     QSqlQuery query;
 
@@ -57,6 +63,13 @@ void addSummaryValues(Summary &summary){
 
     }
 
+/**
+ * @brief getSummaryHistory
+ * @param id
+ * @return summaries
+ *
+ * Gets a singular patients summary history
+ */
 vector<Summary> getSummaryHistory(QString id){
     QSqlQuery query;
     vector<Summary> summaries;

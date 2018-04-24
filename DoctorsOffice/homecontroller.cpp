@@ -31,10 +31,11 @@ void HomeController::selectDate(){
 
 /**
  * @brief HomeController::saveAppt
- * @author Ginelle Z. Ignacio (s300364)
+ * @authors Ginelle Z. Ignacio (s300364) og Katrine Almås (s299622)
  *
  * - Saves newly created appointment
  * - Sends information to the APPOINTMENT TAB table list.
+ * - Adds the new appointment to the database
  */
 void HomeController::saveAppt(){
     QString patient = doctor->ui->createApptPatientLine->text();
@@ -65,7 +66,7 @@ void HomeController::saveAppt(){
 
 /**
  * @brief HomeController::clearCreateAppt
- * @author Ginelle Z. Ignacio (s300364)
+ * @author Ginelle Z. Ignacio (s300364) and Katrine Almås (s299622)
  *
  * Helping method to clear line edits in create
  * appointment group.
@@ -77,10 +78,11 @@ void HomeController::clearCreateAppt(){
 
 /**
  * @brief HomeController::savePatient
- * @author Ginelle Z. Ignacio (s300364)
+ * @authors Ginelle Z. Ignacio (s300364) og Katrine Almås (s299622)
  *
  * - Saves newly created patients
- * - Sends information on the PATIENT TAB's patient list.
+ * - Sends information on the PATIENT TAB's patient list
+ * - Adds the new patient into the database
  */
 void HomeController::savePatient()
 {

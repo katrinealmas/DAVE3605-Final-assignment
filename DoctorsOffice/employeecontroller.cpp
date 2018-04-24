@@ -14,7 +14,7 @@ EmployeeController::EmployeeController(DoctorsOffice *doc):doctor(doc)
 
 /**
  * @brief EmployeeController::saveCreateEmployee
- *
+ * @authors Ginelle Z. Ignacio (s300364) and Katrine Almås (s299622)
  * - Saves newly created employee.
  * - Shows employee's fullname into the employee list.
  * - Shows newly created employee information.
@@ -38,7 +38,6 @@ void EmployeeController::saveCreateEmployee()
     QString info = id + " " + firstname + " " + lastname;
 
     Employee hired(id,firstname,lastname,mobile,position);
-     qDebug() << "in controller" << hired.getFirstname();
     addEmployeeValues(hired);
 
     doctor->ui->employeeList->insertItem(temp, info);
@@ -49,6 +48,12 @@ void EmployeeController::saveCreateEmployee()
     }
 }
 
+/**
+ * @brief EmployeeController::showEmployeeInfo
+ * @param hired
+ *
+ * @author Ginelle Z. Ignacio (s300364)
+ */
 void EmployeeController::showEmployeeInfo(Employee hired){
     doctor->ui->employeeIdLine->setText(hired.getId());
     doctor->ui->employeeFirstLine->setText(hired.getFirstname());
@@ -62,8 +67,15 @@ void EmployeeController::showEmployeeInfo(Employee hired){
     doctor->ui->employeePositionLine->setEnabled(false);
     doctor->ui->employeeMobileLine->setEnabled(false);
 }
+
+/**
+ * @brief EmployeeController::showAllEmployees
+ * @author Katrine Almås (s299622)
+ *
+ * Displays all employees in GUI
+ */
 void EmployeeController::showAllEmployees(){
-    //Show on Employee List
+
    vector<Employee> data = getAllEmployees();
 
    for(int i = 0; i < data.size(); i++){
@@ -75,6 +87,10 @@ void EmployeeController::showAllEmployees(){
     }
 }
 
+/**
+ * @brief EmployeeController::selectEmployeeInfo
+ * @author Katrine Almås (s299622)
+ */
 void EmployeeController::selectEmployeeInfo(){
     //Getting the selected item from view
     QListWidgetItem *item = doctor->ui->employeeList->currentItem();
@@ -95,6 +111,7 @@ void EmployeeController::selectEmployeeInfo(){
 
 /**
  * @brief EmployeeController::clearCreateEmployee
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * - Helping method to clear out the line edits in
  * Create Employee group box.
@@ -109,6 +126,7 @@ void EmployeeController::clearCreateEmployee()
 
 /**
  * @brief EmployeeController::editEmployeeInfoButton
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Enables the the line edits on Employee Information
  * group box to change data.
@@ -123,9 +141,11 @@ void EmployeeController::editEmployeeInfo()
 
 /**
  * @brief EmployeeController::saveEmployeeInfoButton
+ * @authors Ginelle Z. Ignacio (s300364) and Katrine Almås (s299622)
  *
- * Helping to disable the line edits after changing the
- * data in "edit mode".
+ * - Helping to disable the line edits after changing the data in "edit mode"
+ * - Calls the database method to save edit
+ * - Updates widget list with new information
  */
 void EmployeeController::saveEmployeeInfo()
 {

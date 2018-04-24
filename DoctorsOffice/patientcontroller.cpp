@@ -7,6 +7,12 @@
 #include <vector>
 #include <iostream>
 
+/**
+ * @brief PatientController::PatientController
+ * @param doc
+ *
+ * @authors Ginelle Z. Ignacio (s300364) og Katrine Almås (s299622)
+ */
 PatientController::PatientController(DoctorsOffice *doc):doctor(doc)
 {
 
@@ -15,6 +21,7 @@ PatientController::PatientController(DoctorsOffice *doc):doctor(doc)
 
 /**
  * @brief PatientController::editPatientInfo
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Enables the line edits on basic- & contact information
  * group box to change data.
@@ -34,6 +41,7 @@ void PatientController::editPatientInfo()
 
 /**
  * @brief PatientController::savePatientInfo
+ * @author Katrine Almås (s299622) og Ginelle Z. Ignacio (s300364)
  *
  * - Saves patient information.
  * - Clears text edits on current report.
@@ -68,7 +76,7 @@ void PatientController::savePatientInfo(){
     QString info = pat.getId() + " " + firstname + " " + lastname;
     item->setText(info);
 
-    // HISTORY INFORMATION
+    // Adds a new summary to the widget table
     QString id = doctor->ui->patientPersonNrLine->text();
     QString sum = doctor->ui->summaryText->toPlainText();
     QString diagnosis = doctor->ui->diagnosisText->toPlainText();
@@ -85,17 +93,25 @@ void PatientController::savePatientInfo(){
     addSummaryValues(summary);
     displayPatientHistory(pat.getId());
     }
-    qDebug() << "What is the id now?: " << pat.getId();
+
     clearReport();
     disablePatientLineEdits();
 }
 
+/**
+ * @brief PatientController::displayPatientHistory
+ * @param id
+ * @authors Ginelle Z. Ignacio (s300364) og Katrine Almås (s296622)
+ *
+ * - Displays the selected patients summary history
+ */
 void PatientController::displayPatientHistory(QString id){
 
-    // WHEN PATIENT IS SELECTED; THE HISTORY IS DISPLAYED
+    // Displays history when a patient is selected
     vector<Summary> patientHistory = getSummaryHistory(id);
     doctor->ui->historyTable->setRowCount(patientHistory.size());
     doctor->ui->historyTable->setSortingEnabled(false);
+
     for(int i = 0; i < patientHistory.size(); i++){
 
         qDebug() << patientHistory.at(i).getPatient() << "Og info: " + patientHistory.at(i).getDiagnosis();
@@ -108,6 +124,10 @@ void PatientController::displayPatientHistory(QString id){
 
 }
 
+/**
+ * @brief PatientController::showAllPatients
+ * @author Katrine Almås (s299622)
+ */
 void PatientController::showAllPatients(){
 
        vector<Patient> data = getAllPatients();
@@ -122,6 +142,12 @@ void PatientController::showAllPatients(){
 
     }
 
+/**
+ * @brief PatientController::selectPatientInfo
+ * @author Katrine Almås (s299622)
+ *
+ * - Selects the patients information by using the id and calling the database
+ */
 void PatientController::selectPatientInfo(){
     //Getting the selected item from view
     QListWidgetItem *item = doctor->ui->patientList->currentItem();
@@ -141,6 +167,12 @@ void PatientController::selectPatientInfo(){
     displayPatientHistory(list[0]);
 }
 
+/**
+ * @brief PatientController::showPatientInfo
+ * @param pat
+ *
+ * @author Ginelle Z. Ignacio (s300364)
+ */
 void PatientController::showPatientInfo(Patient pat){
     doctor->ui->patientPersonNrLine->setText(pat.getPersonNr());
     doctor->ui->patientFirstLine->setText(pat.getFirstname());
@@ -149,13 +181,14 @@ void PatientController::showPatientInfo(Patient pat){
     doctor->ui->patientStreetLine->setText(pat.getAddress());
     doctor->ui->patientPostLine->setText(pat.getPostcode());
     doctor->ui->patientCityLine->setText(pat.getCity());
-   //doctor->ui->patientBday->setText(pat.getBirthday());
+
 
     disablePatientLineEdits();
 }
 
 /**
  * @brief PatientController::clearReport
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Helping method to clear current report text edits
  * when the save button is fired.
@@ -170,6 +203,7 @@ void PatientController::clearReport()
 
 /**
  * @brief PatientController::disablePatientLineEdits
+ * @author Ginelle Z. Ignacio (s300364)
  *
  * Helping method to disable line edits of patient
  * information when save button is fired.
