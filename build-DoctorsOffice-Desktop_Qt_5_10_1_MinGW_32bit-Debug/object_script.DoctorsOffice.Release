@@ -1,0 +1,14 @@
+INPUT(
+./release\main.o
+./release\doctorsoffice.o
+./release\homecontroller.o
+./release\appointmentcontroller.o
+./release\patientcontroller.o
+./release\employeecontroller.o
+./release\appointment.o
+./release\summary.o
+./release\employee.o
+./release\db.o
+./release\patient.o
+./release\moc_doctorsoffice.o
+);

@@ -1,11 +1,16 @@
 #include "doctorsoffice.h"
 #include "home.h"
-#include "appointment.h"
-#include "patient.h"
-#include "employee.h"
+#include "appointmentcontroller.h"
+#include "patientcontroller.h"
+#include "employeecontroller.h"
 #include "ui_doctorsoffice.h"
+#include "db.h"
 
 #include <QMessageBox>
+
+#include <QApplication>
+#include <QtDebug>
+#include <QtSql>
 
 DoctorsOffice::DoctorsOffice(QWidget *parent) :
     QMainWindow(parent),
@@ -16,7 +21,47 @@ DoctorsOffice::DoctorsOffice(QWidget *parent) :
     employee(new EmployeeController(this))
 {
     ui->setupUi(this);
-    setWindowTitle("Doctor's office");
+
+    //Initialize GUI elements
+        ui->createApptDateEdit->setDisplayFormat("d MMMM yyyy");
+        ui->createApptDateEdit->setDate(QDate::currentDate());
+        ui->createApptTimeEdit->setDisplayFormat("hh:mm");
+        ui->createApptTimeEdit->setTime(QTime(9,00));
+        ui->createPatientBday->setDate(QDate::currentDate().addYears(-20));
+        ui->createPatientBday->setDisplayFormat("d MMMM yyyy");
+        ui->patientBday->setDisplayFormat("d MMM yyyy");
+
+        //Initialize validations
+        ui->calendarWidget->setMinimumDate(QDate::currentDate());
+        ui->createApptDateEdit->setMinimumDate(QDate::currentDate());
+        ui->calendarWidget->setMaximumDate(QDate::currentDate().addMonths(3));
+        ui->createApptDateEdit->setMaximumDate(QDate::currentDate().addMonths(3));
+        ui->createPatientBday->setMinimumDate(QDate::currentDate().addYears(-130));
+        ui->createPatientBday->setMaximumDate(QDate::currentDate());
+        ui->patientBday->setMinimumDate(QDate::currentDate().addYears(-130));
+        ui->patientBday->setMaximumDate(QDate::currentDate());
+
+        QRegExp rxMobile("[0-9]{8}");
+        ui->createPatientMobileLine->setValidator(new QRegExpValidator (rxMobile, this));
+        ui->patientMobileLine->setValidator(new QRegExpValidator (rxMobile, this));
+        ui->employeeMobileLine->setValidator(new QRegExpValidator(rxMobile, this));
+
+        QRegExp rxPersonalNr("[0-9]{11}");
+        ui->createPatientPersonNrLine->setValidator(new QRegExpValidator(rxPersonalNr, this));
+        ui->patientPersonNrLine->setValidator(new QRegExpValidator(rxPersonalNr, this));
+
+        QRegExp rxPost("[0-9]{4}");
+        ui->createPatientPostLine->setValidator(new QRegExpValidator(rxPost, this));
+        ui->patientPostLine->setValidator(new QRegExpValidator(rxPost, this));
+
+        //Set up database connection and initalize all lists
+        createConnection();
+        employee->showAllEmployees();
+        patient->showAllPatients();
+        appt->showAllAppointments();
+
+        setWindowTitle("Doctor's office");
+
 }
 
 DoctorsOffice::~DoctorsOffice()
@@ -91,7 +136,9 @@ void DoctorsOffice::on_deleteApptButton_clicked()
                                   "to delete the selected appointment?",
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
+        qDebug() << "About to hit yes for delete";
       appt->deleteAppt();
+      qDebug() << "Successfully hit yes for delete";
     }
 }
 
@@ -194,4 +241,27 @@ void DoctorsOffice::on_editEmployeeInfoButton_clicked()
 void DoctorsOffice::on_saveEmployeeInfoButton_clicked()
 {
     employee->saveEmployeeInfo();
+}
+
+void DoctorsOffice::on_selectEmployeeButton_clicked()
+{
+    employee->selectEmployeeInfo();
+}
+
+void DoctorsOffice::on_selectPatientButton_clicked()
+{
+    patient->selectPatientInfo();
+}
+
+/**
+ * @brief DoctorsOffice::validateIfEmpty
+ * @author Ginelle Z. Ignacio (s300364)
+ *
+ * Warning message box when user does not set in
+ * information on all input fields when creating
+ * an appointment.
+ */
+void DoctorsOffice::validateIfEmpty(){
+    QMessageBox::warning(this, "Warning", "You must fill up information "
+                                            "on each input fields.");
 }

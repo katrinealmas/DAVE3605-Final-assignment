@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,14 +29,24 @@ SOURCES += \
     homecontroller.cpp \
     appointmentcontroller.cpp \
     patientcontroller.cpp \
-    employeecontroller.cpp
+    employeecontroller.cpp \
+    appointment.cpp \
+    summary.cpp \
+    employee.cpp \
+    db.cpp \
+    patient.cpp
 
 HEADERS += \
         doctorsoffice.h \
-    employee.h \
-    patient.h \
     home.h \
-    appointment.h
+    summary.h \
+    employeecontroller.h \
+    employee.h \
+    appointmentcontroller.h \
+    appointment.h \
+    db.h \
+    patientcontroller.h \
+    patient.h
 
 FORMS += \
         doctorsoffice.ui

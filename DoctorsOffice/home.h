@@ -1,3 +1,7 @@
+/**
+* @author Ginelle Z. Ignacio (s300364)
+*/
+
 #ifndef HOME_H
 #define HOME_H
 
@@ -15,6 +19,8 @@ public:
     void savePatient();
 
     void clearCreatePatient();
+
+    void selectDate();
 
 private:
     DoctorsOffice *doctor;

@@ -1,17 +1,32 @@
-#ifndef APPOINTMENTCONTROLLER_H
-#define APPOINTMENTCONTROLLER_H
+#ifndef TIMEPLAN_H
+#define TIMEPLAN_H
+#include <iostream>
+#include <Qstring>
+#include "patientcontroller.h"
 
-class DoctorsOffice;
+using namespace std;
 
-class AppointmentController
+class Appointment
 {
-public:
-    AppointmentController(DoctorsOffice *doc);
-
-    void deleteAppt();
-
 private:
-    DoctorsOffice *doctor;
+    QString id;
+    QString date;
+    QString time;
+    QString patientId;
+    QString doctorLicence;
+
+public:
+   Appointment(QString date, QString time, QString patientId, QString doctorLicence);
+   QString getId();
+   void setId(QString id);
+   QString getDate();
+   QString getTime();
+   QString getPatientId();
+   QString getDoctorLicence();
 };
 
-#endif // APPOINTMENTCONTROLLER_H
+vector<Appointment> getAllAppointments();
+void deleteAppointment(int remove);
+void addAppointmentValues(Appointment &appt);
+
+#endif // TIMEPLAN_H

@@ -1,6 +1,11 @@
-#include "patient.h"
+#include "patientcontroller.h"
 #include "doctorsoffice.h"
 #include "ui_doctorsoffice.h"
+#include "patient.h"
+#include "summary.h"
+
+#include <vector>
+#include <iostream>
 
 PatientController::PatientController(DoctorsOffice *doc):doctor(doc)
 {
@@ -34,19 +39,117 @@ void PatientController::editPatientInfo()
  * - Clears text edits on current report.
  * - Disables line edits on basic- & contact information.
  */
-void PatientController::savePatientInfo()
-{
-    QString summary = doctor->ui->summaryText->toPlainText();
+void PatientController::savePatientInfo(){
+
+    // PATIENT INFORMATION
+    disablePatientLineEdits();
+
+    QString personNr = doctor->ui->patientPersonNrLine->text();
+    QString firstname = doctor->ui->patientFirstLine->text();
+    QString lastname = doctor->ui->patientLastLine->text();
+    QString mobile = doctor->ui->patientMobileLine->text();
+    QString address = doctor->ui->patientStreetLine->text();
+    QString postcode = doctor->ui->patientPostLine->text();
+    QString city = doctor->ui->patientCityLine->text();
+    QString birthday = doctor->ui->patientBday->text();
+
+    Patient pat(personNr,firstname, lastname, mobile, address, postcode, city, birthday);
+    int index = doctor->ui->patientList->currentRow()+1;
+    QString tmp = QString::number(index);
+    pat.setId(tmp);
+    editPatient(pat);
+
+
+    QListWidgetItem *item = doctor->ui->patientList->currentItem();
+
+
+    // Edits the information in the widget list after it has been edited and saved
+    QString info = pat.getId() + " " + firstname + " " + lastname;
+    item->setText(info);
+
+    // HISTORY INFORMATION
+    QString id = doctor->ui->patientPersonNrLine->text();
+    QString sum = doctor->ui->summaryText->toPlainText();
     QString diagnosis = doctor->ui->diagnosisText->toPlainText();
     QString prescription = doctor->ui->prescriptionText->toPlainText();
 
-    doctor->ui->historyTable->insertRow(doctor->ui->historyTable->rowCount());
     int row = doctor->ui->historyTable->rowCount()-1;
-    doctor->ui->historyTable->setItem(row, 1, new QTableWidgetItem(summary));
+    doctor->ui->historyTable->setItem(row, 0, new QTableWidgetItem(QDate::currentDate().toString("dd/MM/yyyy")));
+    doctor->ui->historyTable->setItem(row, 1, new QTableWidgetItem(sum));
     doctor->ui->historyTable->setItem(row, 2, new QTableWidgetItem(diagnosis));
     doctor->ui->historyTable->setItem(row, 3, new QTableWidgetItem(prescription));
 
+    Summary summary(id, diagnosis, sum, pat.getId(), prescription, QDate::currentDate().toString("dd/MM/yyyy"));
+    addSummaryValues(summary);
+    displayPatientHistory(id);
     clearReport();
+    disablePatientLineEdits();
+}
+
+void PatientController::displayPatientHistory(QString id){
+
+    // WHEN PATIENT IS SELECTED; THE HISTORY IS DISPLAYED
+    vector<Summary> patientHistory = getSummaryHistory(id);
+    doctor->ui->historyTable->setRowCount(patientHistory.size());
+    doctor->ui->historyTable->setSortingEnabled(false);
+    for(int i = 0; i < patientHistory.size(); i++){
+
+        qDebug() << patientHistory.at(i).getPatient() << "Og info: " + patientHistory.at(i).getDiagnosis();
+
+        doctor->ui->historyTable->setItem(i, 0, new QTableWidgetItem(patientHistory.at(i).getDate()));
+        doctor->ui->historyTable->setItem(i, 1, new QTableWidgetItem(patientHistory.at(i).getSummary()));
+        doctor->ui->historyTable->setItem(i, 2, new QTableWidgetItem(patientHistory.at(i).getDiagnosis()));
+        doctor->ui->historyTable->setItem(i, 3, new QTableWidgetItem(patientHistory.at(i).getPrescription()));
+    }
+
+}
+
+void PatientController::showAllPatients(){
+
+       vector<Patient> data = getAllPatients();
+       for(int i = 0; i < data.size(); i++){
+            QString id = data.at(i).getId();
+            QString name = data.at(i).getFirstname();
+            QString last = data.at(i).getSurname();
+
+            QString fullname = id + " " + name + " " + last;
+            doctor->ui->patientList->insertItem(i, fullname);
+        }
+
+    }
+
+void PatientController::selectPatientInfo(){
+    //Getting the selected item from view
+    QListWidgetItem *item = doctor->ui->patientList->currentItem();
+    QString selectedPatient = item->text();
+
+    //Splits QString to extract employee id
+    QStringList list = selectedPatient.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+
+    // Contains emplyee id
+    list[0];
+   // doctor->ui->historyTable->setItem(0, 2, new QTableWidgetItem(dig));
+
+    editPatientInfo();
+
+    Patient edited = getPatient(list[0]);
+    showPatientInfo(edited);
+    qDebug() << "Selected emp" << list[0];
+
+    // WHEN PATIENT IS SELECTED; THE HISTORY IS DISPLAYED
+    displayPatientHistory(list[0]);
+}
+
+void PatientController::showPatientInfo(Patient pat){
+    doctor->ui->patientPersonNrLine->setText(pat.getPersonNr());
+    doctor->ui->patientFirstLine->setText(pat.getFirstname());
+    doctor->ui->patientLastLine->setText(pat.getSurname());
+    doctor->ui->patientMobileLine->setText(pat.getTlf());
+    doctor->ui->patientStreetLine->setText(pat.getAddress());
+    doctor->ui->patientPostLine->setText(pat.getPostcode());
+    doctor->ui->patientCityLine->setText(pat.getCity());
+   //doctor->ui->patientBday->setText(pat.getBirthday());
+
     disablePatientLineEdits();
 }
 

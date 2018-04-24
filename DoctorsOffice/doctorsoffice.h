@@ -1,3 +1,6 @@
+/**
+* @author Katrine Almås (s299622)
+*/
 #ifndef DOCTORSOFFICE_H
 #define DOCTORSOFFICE_H
 
@@ -52,6 +55,11 @@ private slots:
     void on_editEmployeeInfoButton_clicked();
 
     void on_saveEmployeeInfoButton_clicked();
+
+    void on_selectEmployeeButton_clicked();
+
+    void on_selectPatientButton_clicked();
+    void validateIfEmpty();
 
 private:
     Ui::DoctorsOffice *ui;
