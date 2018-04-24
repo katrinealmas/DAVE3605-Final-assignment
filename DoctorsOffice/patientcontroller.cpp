@@ -57,6 +57,7 @@ void PatientController::savePatientInfo(){
     int index = doctor->ui->patientList->currentRow()+1;
     QString tmp = QString::number(index);
     pat.setId(tmp);
+    cout << "Is it the correct id for patients?: "<< index << endl;
     editPatient(pat);
 
 
@@ -73,15 +74,18 @@ void PatientController::savePatientInfo(){
     QString diagnosis = doctor->ui->diagnosisText->toPlainText();
     QString prescription = doctor->ui->prescriptionText->toPlainText();
 
+    if(!(sum.count(' ') == sum.length())){
     int row = doctor->ui->historyTable->rowCount()-1;
     doctor->ui->historyTable->setItem(row, 0, new QTableWidgetItem(QDate::currentDate().toString("dd/MM/yyyy")));
     doctor->ui->historyTable->setItem(row, 1, new QTableWidgetItem(sum));
     doctor->ui->historyTable->setItem(row, 2, new QTableWidgetItem(diagnosis));
     doctor->ui->historyTable->setItem(row, 3, new QTableWidgetItem(prescription));
 
-    Summary summary(id, diagnosis, sum, pat.getId(), prescription, QDate::currentDate().toString("dd/MM/yyyy"));
+    Summary summary(0, diagnosis, sum, pat.getId(), prescription, QDate::currentDate().toString("dd/MM/yyyy"));
     addSummaryValues(summary);
-    displayPatientHistory(id);
+    displayPatientHistory(pat.getId());
+    }
+    qDebug() << "What is the id now?: " << pat.getId();
     clearReport();
     disablePatientLineEdits();
 }
@@ -123,20 +127,17 @@ void PatientController::selectPatientInfo(){
     QListWidgetItem *item = doctor->ui->patientList->currentItem();
     QString selectedPatient = item->text();
 
-    //Splits QString to extract employee id
+    //Splits QString to extract the id
     QStringList list = selectedPatient.split(QRegExp("\\s+"), QString::SkipEmptyParts);
 
-    // Contains emplyee id
+    // Contains the id
     list[0];
-   // doctor->ui->historyTable->setItem(0, 2, new QTableWidgetItem(dig));
 
     editPatientInfo();
-
     Patient edited = getPatient(list[0]);
     showPatientInfo(edited);
-    qDebug() << "Selected emp" << list[0];
 
-    // WHEN PATIENT IS SELECTED; THE HISTORY IS DISPLAYED
+    // when patient is selected, history is displayed
     displayPatientHistory(list[0]);
 }
 
