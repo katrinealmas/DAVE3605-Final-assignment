@@ -1,6 +1,4 @@
-/**
-* @author Katrine Almås (s299622)
-*/
+
 #ifndef DOCTORSOFFICE_H
 #define DOCTORSOFFICE_H
 

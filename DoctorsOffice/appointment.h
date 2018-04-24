@@ -5,6 +5,9 @@
 #include "patientcontroller.h"
 
 using namespace std;
+/**
+* @author Katrine Almås (s299622)
+*/
 
 class Appointment
 {

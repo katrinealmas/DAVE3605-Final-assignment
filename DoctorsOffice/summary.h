@@ -10,6 +10,7 @@
 #include <QtDebug>
 #include <QtSql>
 
+using namespace std;
 
 class Summary
 {
