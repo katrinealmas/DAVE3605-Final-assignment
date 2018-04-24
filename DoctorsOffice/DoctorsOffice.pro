@@ -29,6 +29,7 @@ SOURCES += \
     homecontroller.cpp \
     appointmentcontroller.cpp \
     patientcontroller.cpp \
+<<<<<<< HEAD
     employeecontroller.cpp
 
 HEADERS += \
@@ -37,6 +38,26 @@ HEADERS += \
     patient.h \
     home.h \
     appointment.h
+=======
+    employeecontroller.cpp \
+    appointment.cpp \
+    summary.cpp \
+    employee.cpp \
+    db.cpp \
+    patient.cpp
+
+HEADERS += \
+        doctorsoffice.h \
+    home.h \
+    summary.h \
+    employeecontroller.h \
+    employee.h \
+    appointmentcontroller.h \
+    appointment.h \
+    db.h \
+    patientcontroller.h \
+    patient.h
+>>>>>>> master
 
 FORMS += \
         doctorsoffice.ui

@@ -63,12 +63,12 @@
         <rect>
          <x>30</x>
          <y>30</y>
-         <width>55</width>
+         <width>81</width>
          <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Patient</string>
+        <string>Person Nr</string>
        </property>
       </widget>
       <widget class="QLabel" name="createApptDateLabel">
@@ -89,12 +89,12 @@
         <rect>
          <x>30</x>
          <y>60</y>
-         <width>55</width>
+         <width>81</width>
          <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Doctor</string>
+        <string>Employee Id</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="createApptPatientLine">
@@ -117,7 +117,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Dr. </string>
+        <string/>
        </property>
       </widget>
       <widget class="QPushButton" name="saveApptButton">

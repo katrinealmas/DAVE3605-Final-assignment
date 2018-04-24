@@ -1,6 +1,10 @@
 #include "doctorsoffice.h"
 #include "home.h"
 #include "ui_doctorsoffice.h"
+<<<<<<< HEAD
+=======
+#include "appointment.h"
+>>>>>>> master
 
 
 /**
@@ -46,6 +50,13 @@ void HomeController::saveAppt(){
             date.isEmpty() | time.isEmpty()) {
         doctor->validateIfEmpty();
     } else {
+<<<<<<< HEAD
+=======
+        // Add patient in database
+        Appointment newapt(date, time, patient, patientsDoctor);
+        addAppointmentValues(newapt);
+
+>>>>>>> master
         //Show on appointment list
         doctor->ui->apptTable->insertRow(doctor->ui->apptTable->rowCount());
         int row = doctor->ui->apptTable->rowCount()-1;
@@ -67,7 +78,10 @@ void HomeController::saveAppt(){
  */
 void HomeController::clearCreateAppt(){
     doctor->ui->createApptPatientLine->clear();
+<<<<<<< HEAD
     doctor->ui->createApptDoctorLine->setText("Dr. ");
+=======
+>>>>>>> master
     doctor->ui->createApptDateEdit->setDate(QDate::currentDate());
 }
 
@@ -82,7 +96,10 @@ void HomeController::savePatient()
 {
     QString firstname = doctor->ui->createPatientFirstLine->text();
     QString lastname = doctor->ui->createPatientLastLine->text();
+<<<<<<< HEAD
     QString fullname = firstname + " " + lastname;
+=======
+>>>>>>> master
     QDate birthday = doctor->ui->createPatientBday->date();
     QString personalNr = doctor->ui->createPatientPersonNrLine->text();
     QString mobile = doctor->ui->createPatientMobileLine->text();
@@ -99,7 +116,22 @@ void HomeController::savePatient()
     }
     else {
         //Show on list
+<<<<<<< HEAD
         doctor->ui->patientList->insertItem(0, fullname);
+=======
+        int size = doctor->ui->patientList->count()+1;
+
+        // Adds patient in database
+        Patient patient(personalNr,firstname,lastname,mobile,street,postalCode,city,birthday.toString("dd/MM/yyyy"));
+        addPatientValues(patient);
+        patient.setId(QString::number(size));
+        QString id = patient.getId();
+
+        // What will show up in ui list
+        QString fullname = id + " " + firstname + " " + lastname;
+        doctor->ui->patientList->insertItem(size, fullname);
+
+>>>>>>> master
 
         //Send information on Patient Tab
         doctor->ui->patientFirstLine->setText(firstname);
@@ -133,7 +165,10 @@ void HomeController::clearCreatePatient(){
     doctor->ui->createPatientCityLine->clear();
     doctor->ui->createPatientPostLine->clear();
 }
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> master

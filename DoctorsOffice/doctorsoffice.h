@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 /**
 * @author Ginelle Z. Ignacio (s300364)
 */
 
+=======
+>>>>>>> master
 
 #ifndef DOCTORSOFFICE_H
 #define DOCTORSOFFICE_H
@@ -29,11 +32,18 @@ public:
     explicit DoctorsOffice(QWidget *parent = 0);
     ~DoctorsOffice();
 
+<<<<<<< HEAD
     bool createConnections();
 
     void addPatientValues(QString id, QString name, QString surname, int tlf, QString address, int post);
 
 private slots:
+=======
+
+private slots:
+
+    void on_calendarWidget_clicked(const QDate &date);
+>>>>>>> master
 
     void on_saveApptButton_clicked();
 
@@ -61,9 +71,17 @@ private slots:
 
     void on_saveEmployeeInfoButton_clicked();
 
+<<<<<<< HEAD
     void validateIfEmpty();
 
     void on_calendarWidget_clicked(const QDate &date);
+=======
+    void on_selectEmployeeButton_clicked();
+
+    void on_selectPatientButton_clicked();
+
+    void validateIfEmpty();
+>>>>>>> master
 
 private:
     Ui::DoctorsOffice *ui;

@@ -1,0 +1,14 @@
+INPUT(
+./debug\main.o
+./debug\doctorsoffice.o
+./debug\homecontroller.o
+./debug\appointmentcontroller.o
+./debug\patientcontroller.o
+./debug\employeecontroller.o
+./debug\appointment.o
+./debug\summary.o
+./debug\employee.o
+./debug\db.o
+./debug\patient.o
+./debug\moc_doctorsoffice.o
+);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "employee.h"
 #include "doctorsoffice.h"
 #include "ui_doctorsoffice.h"
@@ -11,6 +12,17 @@
  * the datas and methods belonging to DoctorsOffice
  * class.
  */
+=======
+#include "employeecontroller.h"
+#include "doctorsoffice.h"
+#include "ui_doctorsoffice.h"
+#include "employee.h"
+
+#include <QApplication>
+#include <QtDebug>
+#include <QtSql>
+
+>>>>>>> master
 EmployeeController::EmployeeController(DoctorsOffice *doc):doctor(doc)
 {
 
@@ -18,7 +30,10 @@ EmployeeController::EmployeeController(DoctorsOffice *doc):doctor(doc)
 
 /**
  * @brief EmployeeController::saveCreateEmployee
+<<<<<<< HEAD
  * @author Ginelle Z. Ignacio (s300364)
+=======
+>>>>>>> master
  *
  * - Saves newly created employee.
  * - Shows employee's fullname into the employee list.
@@ -27,9 +42,15 @@ EmployeeController::EmployeeController(DoctorsOffice *doc):doctor(doc)
  */
 void EmployeeController::saveCreateEmployee()
 {
+<<<<<<< HEAD
     QString firstname = doctor->ui->createEmployeeFirstLine->text();
     QString lastname = doctor->ui->createEmployeeLastLine->text();
     QString fullname = firstname + " " + lastname;
+=======
+
+    QString firstname = doctor->ui->createEmployeeFirstLine->text();
+    QString lastname = doctor->ui->createEmployeeLastLine->text();
+>>>>>>> master
     QString position = doctor->ui->createEmployeePositionLine->text();
     QString mobile = doctor->ui->createEmployeeMobileLine->text();
 
@@ -37,6 +58,7 @@ void EmployeeController::saveCreateEmployee()
     if(firstname.isEmpty() | lastname.isEmpty() |
             position.isEmpty() | mobile.isEmpty()){
         doctor->validateIfEmpty();
+<<<<<<< HEAD
     }
     else {
         //Show on Employee List
@@ -51,11 +73,75 @@ void EmployeeController::saveCreateEmployee()
         clearCreateEmployee();
     }
 
+=======
+    }else {
+    int temp = doctor->ui->employeeList->count();
+    QString id = QString::number(temp+1);
+    QString info = id + " " + firstname + " " + lastname;
+
+    Employee hired(id,firstname,lastname,mobile,position);
+     qDebug() << "in controller" << hired.getFirstname();
+    addEmployeeValues(hired);
+
+    doctor->ui->employeeList->insertItem(temp, info);
+
+    //Show employee information
+    showEmployeeInfo(hired);
+    clearCreateEmployee();
+    }
+}
+
+void EmployeeController::showEmployeeInfo(Employee hired){
+    doctor->ui->employeeIdLine->setText(hired.getId());
+    doctor->ui->employeeFirstLine->setText(hired.getFirstname());
+    doctor->ui->employeeLastLine->setText(hired.getSurname());
+    doctor->ui->employeePositionLine->setText(hired.getPosition());
+    doctor->ui->employeeMobileLine->setText(hired.getTlf());
+
+    doctor->ui->employeeIdLine->setEnabled(false);
+    doctor->ui->employeeFirstLine->setEnabled(false);
+    doctor->ui->employeeLastLine->setEnabled(false);
+    doctor->ui->employeePositionLine->setEnabled(false);
+    doctor->ui->employeeMobileLine->setEnabled(false);
+}
+void EmployeeController::showAllEmployees(){
+    //Show on Employee List
+   vector<Employee> data = getAllEmployees();
+
+   for(int i = 0; i < data.size(); i++){
+        QString name = data.at(i).getFirstname();
+        QString last = data.at(i).getSurname();
+        QString id = data.at(i).getId();
+        QString fullname = id + " " + name + " " + last;
+        doctor->ui->employeeList->insertItem(i+1, fullname);
+    }
+}
+
+void EmployeeController::selectEmployeeInfo(){
+    //Getting the selected item from view
+    QListWidgetItem *item = doctor->ui->employeeList->currentItem();
+    QString selectedEmployee = item->text();
+
+    //Splits QString to extract employee id
+    QStringList list = selectedEmployee.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+
+    // Contains emplyee id
+    list[0];
+   // doctor->ui->employeeIdLine->setText(list[0]);
+    editEmployeeInfo();
+
+    Employee hired = getEmployee(list[0]);
+    showEmployeeInfo(hired);
+    qDebug() << "Selected emp" << list[0];
+>>>>>>> master
 }
 
 /**
  * @brief EmployeeController::clearCreateEmployee
+<<<<<<< HEAD
  * @author Ginelle Z. Ignacio (s300364)
+=======
+>>>>>>> master
  *
  * - Helping method to clear out the line edits in
  * Create Employee group box.
@@ -70,7 +156,10 @@ void EmployeeController::clearCreateEmployee()
 
 /**
  * @brief EmployeeController::editEmployeeInfoButton
+<<<<<<< HEAD
  * @author Ginelle Z. Ignacio (s300364)
+=======
+>>>>>>> master
  *
  * Enables the the line edits on Employee Information
  * group box to change data.
@@ -85,15 +174,47 @@ void EmployeeController::editEmployeeInfo()
 
 /**
  * @brief EmployeeController::saveEmployeeInfoButton
+<<<<<<< HEAD
  * @author Ginelle Z. Ignacio (s300364)
+=======
+>>>>>>> master
  *
  * Helping to disable the line edits after changing the
  * data in "edit mode".
  */
 void EmployeeController::saveEmployeeInfo()
 {
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     doctor->ui->employeeFirstLine->setEnabled(false);
     doctor->ui->employeeLastLine->setEnabled(false);
     doctor->ui->employeePositionLine->setEnabled(false);
     doctor->ui->employeeMobileLine->setEnabled(false);
+<<<<<<< HEAD
 }
+=======
+
+    QString id = doctor->ui->employeeIdLine->text();
+    QString firstname = doctor->ui->employeeFirstLine->text();
+    QString lastname = doctor->ui->employeeLastLine->text();
+    QString position = doctor->ui->employeePositionLine->text();
+    QString mobile = doctor->ui->employeeMobileLine->text();
+
+    Employee emp(id, firstname, lastname, mobile, position);
+
+    editEmployee(emp);
+
+    QListWidgetItem *item = doctor->ui->employeeList->currentItem();
+    int row = doctor->ui->employeeList->currentRow();
+
+    // Edits the information in the widget list after it has been edited and saved
+    QString info = id + " " + firstname + " " + lastname;
+    item->setText(info);
+
+
+}
+
+
+>>>>>>> master
